@@ -7,13 +7,15 @@ import (
 )
 
 func setupRoutes() {
-	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
-		fmt.Fprintf(writer, "Simple Server")
+	pool := websocket.NewPool()
+	go pool.Start()
+
+	http.HandleFunc("/ws", func(writer http.ResponseWriter, request *http.Request) {
+		websocket.NewInstance().RegisterNewClient(pool, writer, request)
 	})
-	http.HandleFunc("/ws", websocket.NewInstance().ServeWebSocket)
 }
 func main() {
-	fmt.Println("Chat App v0.01")
+	fmt.Println("Distributed Chat App v0.01")
 	setupRoutes()
 	http.ListenAndServe(":8080", nil)
 }
