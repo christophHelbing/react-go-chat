@@ -1,7 +1,9 @@
 import "./chat-history.scss"
+import {Message} from "../message/message.tsx";
+
 export default function ChatHistory({messsageHistory}) {
-    const messages = (messsageHistory as string[]).map((msg, index) => (
-        <p key={index}>{msg}</p>
+    const messages = (messsageHistory as string[]).map(msg => (
+        <Message jsonMessage={msg}/>
     ));
 
     return (

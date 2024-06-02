@@ -3,6 +3,7 @@ import {connect, sendMsg} from "./api";
 import {Header} from "./components/header/header.tsx";
 import ChatHistory from "./components/chat-history/chat-history.tsx";
 import {useEffect, useState} from "react";
+import {ChatInput} from "./components/chat-input/chat-input.tsx";
 
 function App() {
     const [messages, addMessage] = useState<string[]>([])
@@ -13,16 +14,16 @@ function App() {
         })
     })
 
-    function send() {
-        sendMsg("hello")
+    function send(msg: string) {
+        sendMsg(msg)
     }
 
     return (
         <>
-            <div>
+            <div className="container">
                 <Header/>
                 <ChatHistory messsageHistory={messages}/>
-                <button onClick={send}>Send Hello</button>
+                <ChatInput sendMsg={send}/>
             </div>
         </>
     )
